@@ -1,40 +1,41 @@
-import React from 'react';
+import { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
+import { ClimaContext } from '../../context/ClimaContext';
 import { getClima } from '../../service';
 import './TarjetaClimaCreation.css';
 
 const TarjetaClimaCreation = () => {
 
+    const {climas, setClimas, id, setId} = useContext(ClimaContext);
     const {register,handleSubmit,formState: { errors },} = useForm();
     const navigate = useNavigate();
-    var list=[];
+
     const onSubmit = (data) => {
-        console.log("Form "+data.nombreUbicacion);
-        const climaStored = localStorage.getItem('tarjetasClima')
-        console.log("LocalStored "+JSON.parse(climaStored))
-        if (climaStored) {
-            list=JSON.parse(climaStored);
-        }
+
         const climaNew = {
-            id: list.length + 1,
+            id: id,
             name: data.nombreUbicacion,
             latitude: data.latitud,
-            longitude: data.longitud,
-            url: data.img,
+            longitude: data.longitud,            
             temperature:null,
-            windspeed:null
+            windspeed:null,
+            time: new Date(),
+            weathercode:null
         }
         getClima(data.latitud,data.longitud).then((climaData) => {
+            console.log(climaData)
             climaNew.temperature=climaData.current_weather.temperature;
             climaNew.windspeed=climaData.current_weather.windspeed;
-            list.push(climaNew);
-            localStorage.setItem("tarjetasClima", JSON.stringify(list));
-            navigate('/')
-        }).catch((err) => console.log(err));
+            climaNew.weathercode=climaData.current_weather.weathercode;
+            
+            setClimas([...climas, climaNew])
+            setId(id+1);
 
-        
+            navigate('/')
+        }).catch((err) => console.log(err));    
     }
+
     return (
         <>
            <div className='container '>
@@ -63,14 +64,6 @@ const TarjetaClimaCreation = () => {
                             <input type="text" className="form-control" id="longitud" placeholder='Longitud'
                                 {...register('longitud', {
                                     required: 'Debe ingresar una longitud',
-                                })}
-                            />
-                            <p>{errors.longitud?.message}</p>
-                        </div>
-                        <div className="mb-3">
-                            <input type="text" className="form-control" id="img" placeholder='Url de una imagen'
-                                {...register('img', {
-                                    required: 'Debe ingresar una url de una imagen',
                                 })}
                             />
                             <p>{errors.longitud?.message}</p>

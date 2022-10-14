@@ -1,23 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import { useContext, useEffect } from 'react';
 import TarjetasClima from '../../components/Clima/TarjetasClima';
+import { ClimaContext } from '../../context/ClimaContext';
 import './Home.css';
 
 const Home = () => {
 
-    const [listClima, setListClima] = useState([]);
-
-    useEffect(() => {
-        let data = localStorage.getItem("tarjetasClima");
-        if (data) {
-          setListClima(JSON.parse(data));
-        }
-    }, []);
-
+    const {climas} = useContext(ClimaContext)    
+        
     return (
         <div >
             <div className='container'>
                 <h1>Home</h1>
-                <TarjetasClima list={listClima}/>
+                <TarjetasClima list={climas}/>
             </div>
         </div>
     );

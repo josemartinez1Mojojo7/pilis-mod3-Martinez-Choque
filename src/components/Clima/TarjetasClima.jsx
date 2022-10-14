@@ -6,8 +6,7 @@ const TarjetasClima = ({list}) => {
     return (
         <>
             <div className='container '>
-            <div className='row p-4 row-cols-2 g-2 g-lg-3'>
-            
+            <div className='row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4'>
                 {list.map((clima) => (
                     <TarjetaClima key={clima.id} clima={clima} />
                 ))}
