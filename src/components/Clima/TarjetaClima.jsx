@@ -1,11 +1,22 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { FaTrashAlt } from "react-icons/fa";
 import { WiDaySunny, WiCloud } from "react-icons/wi";
+import { ClimaContext } from '../../context/ClimaContext';
 import './TarjetaClima.css';
 
 const TarjetaClima = ({clima}) => {
-    const { name, latitude, longitude, temperature, windspeed, time, weathercode } = clima
+
+    const { climas, setClimas } = useContext(ClimaContext);
+    const { id, name, latitude, longitude, temperature, windspeed, time, weathercode } = clima
     const fecha = new Date(time);
+    
+    const handleDeleteClima = () => {
+    
+        setClimas(
+          climas.filter((card) => card.id !== id )//!==
+        );        
+      }
+
     return (
         <>
         <div className='col'>
@@ -14,7 +25,9 @@ const TarjetaClima = ({clima}) => {
                 <div className='card-text'>
                     <div className='card-top'>
                         <h5 className="card-title">{name}</h5>
-                        <FaTrashAlt />
+                        <div className='fav' onClick={handleDeleteClima}>
+                            <FaTrashAlt />
+                        </div>
                     </div>
                     <p className='card-time'>{fecha.toLocaleString()}</p>
                     { weathercode == 3 ? (

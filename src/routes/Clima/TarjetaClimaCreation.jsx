@@ -1,23 +1,20 @@
-import React from 'react';
+import { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
+import { ClimaContext } from '../../context/ClimaContext';
 import { getClima } from '../../service';
 import './TarjetaClimaCreation.css';
 
 const TarjetaClimaCreation = () => {
 
+    const {climas, setClimas, id, setId} = useContext(ClimaContext);
     const {register,handleSubmit,formState: { errors },} = useForm();
     const navigate = useNavigate();
-    var list=[];
+
     const onSubmit = (data) => {
-        console.log("Form "+data.nombreUbicacion);
-        const climaStored = localStorage.getItem('tarjetasClima')
-        console.log("LocalStored "+JSON.parse(climaStored))
-        if (climaStored) {
-            list=JSON.parse(climaStored);
-        }
+
         const climaNew = {
-            id: list.length + 1,
+            id: id,
             name: data.nombreUbicacion,
             latitude: data.latitud,
             longitude: data.longitud,            
@@ -31,13 +28,14 @@ const TarjetaClimaCreation = () => {
             climaNew.temperature=climaData.current_weather.temperature;
             climaNew.windspeed=climaData.current_weather.windspeed;
             climaNew.weathercode=climaData.current_weather.weathercode;
-            list.push(climaNew);
-            localStorage.setItem("tarjetasClima", JSON.stringify(list));
-            navigate('/')
-        }).catch((err) => console.log(err));
+            
+            setClimas([...climas, climaNew])
+            setId(id+1);
 
-        
+            navigate('/')
+        }).catch((err) => console.log(err));    
     }
+
     return (
         <>
            <div className='container '>
