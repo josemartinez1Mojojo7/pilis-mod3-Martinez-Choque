@@ -1,9 +1,26 @@
-import React from "react";
+import { useContext, useEffect } from "react";
 import { Link, Outlet } from "react-router-dom";
 import imgLogo from '../../assets/Bootstrap_logo.svg.png';
+import { UserContext } from "../../context/UserContext";
 import "./Navigation.css";
 
 const Navigation = () => {
+
+    const { currentUser, setCurrentUser } = useContext(UserContext);    
+
+    useEffect(() => {
+      const userStored = localStorage.getItem('currentUser')
+      console.log({userStored})
+      if (userStored) {
+        setCurrentUser(JSON.parse(userStored))
+      }
+    }, [])
+  
+    const handleSignOut = () => {       
+        localStorage.setItem('currentUser', null) 
+        setCurrentUser(null);
+    };
+
   return (
     <>
         <nav className="navbar navbar-expand-lg bg-light">
@@ -21,12 +38,23 @@ const Navigation = () => {
                             <a className="nav-link active" aria-current="page" href="#">Home</a>
                         </li>
                     </ul>
-                    <div className="navbar-text p-2">
-                        <Link className="nav-link" to="/clima/create">Nueva Ubicación</Link>
-                    </div>
-                    <form className="d-flex" role="search">
-                        <button className="btn btn-outline-success" type="submit">Login</button>
-                    </form>            
+
+                    { (currentUser) && (
+                            <div className="navbar-text p-2">
+                                <Link className="nav-link" to="/clima/create">Nueva Ubicación</Link>
+                            </div>
+                        )
+                    }
+                    
+                    {currentUser ? (
+                        <span className='btn btn-outline-danger' onClick={handleSignOut}>
+                        Cerrar Sesión
+                        </span>
+                    ) : (
+                        <Link className='btn btn-outline-success' to='/login'>
+                        Iniciar Sesión
+                        </Link>
+                    )}            
                 </div>
             </div>
         </nav>
