@@ -20,14 +20,17 @@ const TarjetaClimaCreation = () => {
             id: list.length + 1,
             name: data.nombreUbicacion,
             latitude: data.latitud,
-            longitude: data.longitud,
-            url: data.img,
+            longitude: data.longitud,            
             temperature:null,
-            windspeed:null
+            windspeed:null,
+            time: new Date(),
+            weathercode:null
         }
         getClima(data.latitud,data.longitud).then((climaData) => {
+            console.log(climaData)
             climaNew.temperature=climaData.current_weather.temperature;
             climaNew.windspeed=climaData.current_weather.windspeed;
+            climaNew.weathercode=climaData.current_weather.weathercode;
             list.push(climaNew);
             localStorage.setItem("tarjetasClima", JSON.stringify(list));
             navigate('/')
@@ -63,14 +66,6 @@ const TarjetaClimaCreation = () => {
                             <input type="text" className="form-control" id="longitud" placeholder='Longitud'
                                 {...register('longitud', {
                                     required: 'Debe ingresar una longitud',
-                                })}
-                            />
-                            <p>{errors.longitud?.message}</p>
-                        </div>
-                        <div className="mb-3">
-                            <input type="text" className="form-control" id="img" placeholder='Url de una imagen'
-                                {...register('img', {
-                                    required: 'Debe ingresar una url de una imagen',
                                 })}
                             />
                             <p>{errors.longitud?.message}</p>
