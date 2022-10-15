@@ -3,17 +3,18 @@ import { Link, Outlet } from "react-router-dom";
 import { UserContext } from "../../context/UserContext";
 import "./Navigation.css";
 import { WiDayCloudyWindy } from "react-icons/wi";
+import { FaUserAlt } from "react-icons/fa";
+
 const Navigation = () => {
 
     const { currentUser, setCurrentUser } = useContext(UserContext);    
 
     useEffect(() => {
       const userStored = localStorage.getItem('currentUser')
-      console.log({userStored})
       if (userStored) {
         setCurrentUser(JSON.parse(userStored))
       }
-    })
+    },[])
   
     const handleSignOut = () => {       
         localStorage.setItem('currentUser', null) 
@@ -22,9 +23,10 @@ const Navigation = () => {
 
   return (
     <>
-        <nav className="navbar navbar-expand-lg bg-light">
+    <div className="container mt-2 shadow mb-4 rounded">
+        <nav className="navbar navbar-expand-lg">
             <div className="container">
-                <Link className="navbar-brand" to="/">
+                <Link className="navbar-brand mb-2" to="/">
                     <i className="icon-climapp"><WiDayCloudyWindy /></i>
                     ClimaApp
                 </Link>
@@ -34,16 +36,24 @@ const Navigation = () => {
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                         <li className="nav-item">
-                            
-                        </li>
-                    </ul>
-
-                    { (currentUser) && (
-                            <div className="p-2">
+                        { (currentUser) && (
+                            <div >
                                 <Link className="btn btn-outline-primary" to="/clima/create">Nueva Ubicación</Link>
                             </div>
                         )
                     }
+                        </li>
+                    </ul>
+
+                    { (currentUser) && (
+                            <div>
+                                <FaUserAlt/>
+                                <span className="mx-2">{currentUser.username}</span>
+                            </div>
+                        )                        
+                    }
+
+                    
                     
                     {currentUser ? (
                         <span className='btn btn-outline-danger' onClick={handleSignOut}>
@@ -57,7 +67,7 @@ const Navigation = () => {
                 </div>
             </div>
         </nav>
-
+        </div>
         <Outlet/>
 
     </>

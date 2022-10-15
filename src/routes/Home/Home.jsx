@@ -9,8 +9,8 @@ const Home = () => {
         
     return (
         <div >
-            <div className='container'>
-                <h1>Ciudades</h1>
+            <div className='container shadow mb-4'>
+                <h1 >Ciudades</h1>
                 <TarjetasClima list={climas}/>
             </div>
         </div>

@@ -5,6 +5,10 @@
   --wicloud: #457b9d;
 }
 
+.efectoHover:hover{
+  opacity: 0.6;
+}
+
 .card-top {
   display: flex;
   flex-direction: row;
@@ -65,5 +69,5 @@
 
 .fav:hover {
   cursor: pointer;
-  background-color: #f8f8f8;
+  background-color: #ff4d4d;
 }

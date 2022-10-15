@@ -52,3 +52,9 @@
   justify-content: center;
   margin-top: 25px;
 }
+.btn-form:hover{
+  opacity: 0.75;
+}
+.txt-error{
+  color: #ff4d4d;
+}

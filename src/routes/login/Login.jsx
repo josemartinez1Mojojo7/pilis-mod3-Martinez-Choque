@@ -20,11 +20,11 @@ const Login = () => {
 
 return (
     <div className='sign-in-container'>
-    <span className='mb-3'>Ingresa con tu usuario y contraseña</span>
-    <form className='sign-in-form' onSubmit={handleSubmit(onSubmit)}>
+    <form className='sign-in-form shadow p-4 mb-4' onSubmit={handleSubmit(onSubmit)}>
+        <h1 className='mb-4'>Welcome</h1>
         <div className='div-input'>
-            <div class="input-group mb-3">
-                <span class="box-icon">
+            <div className="input-group mb-3">
+                <span className="box-icon">
                     <i className='icon-login'><BiUser/></i>
                 </span>
                 <input
@@ -37,11 +37,11 @@ return (
                     )
                 } />
             </div>
-            <p>{errors.username?.message}</p>
+            <p className='txt-error'>{errors.username?.message}</p>
         </div>
         <div className='div-input'>
-            <div class="input-group mb-3">
-                <span class="box-icon">
+            <div className="input-group mb-3">
+                <span className="box-icon">
                     <i className='icon-login'><RiLockPasswordFill/></i>
                 </span>
                 <input
@@ -57,7 +57,7 @@ return (
                     }
                     />                
             </div>
-            <p>{errors.password?.message}</p>
+            <p className='txt-error'>{errors.password?.message}</p>
         </div>
         <button className='btn-form' type='submit'>Iniciar Sesión</button>
     </form>

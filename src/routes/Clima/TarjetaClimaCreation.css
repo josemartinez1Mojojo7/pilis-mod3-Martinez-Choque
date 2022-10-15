@@ -5,3 +5,6 @@
   display: flex;
   justify-content: center !important;
 }
+.txt-error{
+  color: #ff4d4d;
+}
