@@ -1,7 +1,7 @@
-.card{
-    width: 20rem;
+.card {
+  width: 20rem;
 }
-.col{
-    display: flex;
-    justify-content: center !important;
+.col {
+  display: flex;
+  justify-content: center !important;
 }
